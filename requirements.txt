@@ -29,5 +29,4 @@ websockets==8.1
 Werkzeug==0.16.0
 WTForms==2.2.1
 psycopg2
-python-dotenv
 gunicorn
