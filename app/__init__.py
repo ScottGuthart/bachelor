@@ -4,14 +4,20 @@ from config import Config
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 bootstrap = Bootstrap()
+db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
     bootstrap.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -50,3 +56,5 @@ def create_app(config_class=Config):
         app.logger.info('Flaskapp startup')
 
     return app
+
+from app import models
